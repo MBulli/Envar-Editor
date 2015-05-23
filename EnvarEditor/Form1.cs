@@ -170,12 +170,37 @@ namespace EnvarEditor
             EditEnvVar(GetCurrentSelectedEnvVar(), EnvVarEditMode.ValueOnly);
         }
 
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.End || e.KeyCode == Keys.Home)
+            {
+                // handle them in key up
+                e.Handled = true;
+            }
+        }
 
         private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Return)
             {
                 EditEnvVar(GetCurrentSelectedEnvVar(), EnvVarEditMode.ValueOnly);
+            }
+            if (e.KeyCode == Keys.Home)
+            {
+                if (this.dataGridView1.Rows.Count > 0)
+                {
+                    this.dataGridView1.Rows[0].Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = 0;
+                }
+            }
+            if (e.KeyCode == Keys.End)
+            {
+                if (this.dataGridView1.Rows.Count > 0)
+                {
+                    int i = this.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.None);
+                    this.dataGridView1.Rows[i].Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = i;
+                }
             }
         }
 
