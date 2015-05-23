@@ -37,6 +37,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelCharCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkBoxUserSpecific
@@ -83,6 +84,7 @@
             this.textBoxValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxValue.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxValue.Location = new System.Drawing.Point(12, 82);
             this.textBoxValue.Multiline = true;
             this.textBoxValue.Name = "textBoxValue";
@@ -135,12 +137,23 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Each line will be automatically separated with a semicolon.";
             // 
+            // labelCharCount
+            // 
+            this.labelCharCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelCharCount.AutoSize = true;
+            this.labelCharCount.Location = new System.Drawing.Point(597, 302);
+            this.labelCharCount.Name = "labelCharCount";
+            this.labelCharCount.Size = new System.Drawing.Size(42, 13);
+            this.labelCharCount.TabIndex = 7;
+            this.labelCharCount.Text = "0 chars";
+            // 
             // EnvVarEditDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(652, 358);
+            this.Controls.Add(this.labelCharCount);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -173,5 +186,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelCharCount;
     }
 }

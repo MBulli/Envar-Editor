@@ -33,6 +33,8 @@ namespace EnvarEditor
 
             // see: http://msdn.microsoft.com/en-us/library/windows/desktop/ms724872.aspx
             this.textBoxName.MaxLength = 16383;
+            // see: Exceptions of System.Environment.SetEnvironmentVariable()
+            this.textBoxValue.MaxLength = 32767 - 1;
 
             // TODO:
             // check this? http://blogs.msdn.com/b/oldnewthing/archive/2006/09/29/776926.aspx
@@ -42,7 +44,10 @@ namespace EnvarEditor
         {
             base.OnLoad(e);
 
-            this.textBoxValue.Select();            
+            // give value textbox the focus but remove selection
+            this.textBoxValue.Select();
+            this.textBoxValue.SelectAll();
+            this.textBoxValue.DeselectAll();
         }
 
         private void OnEditModeChanged()
@@ -110,11 +115,13 @@ namespace EnvarEditor
 
             if (sb.Length == 0)
             {
-                MessageBox.Show("Everythings seems fine");
+                MessageBox.Show(string.Format("Everything seems fine.\nPaths found: {0}", pathsFound),
+                                "Path check", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show(string.Format("These paths could not be accessed:\n\n{0}", sb.ToString()));
+                MessageBox.Show(string.Format("Paths found: {0}\nThese paths could not be accessed:\n\n{1}", pathsFound, sb.ToString()),
+                                               "Path check", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -179,7 +186,16 @@ namespace EnvarEditor
 
         private void textBoxValue_TextChanged(object sender, EventArgs e)
         {
+            // Line breaks are converted to semicolon thus:
+            // \r\n     => ; 
+            // (2 char) => (1 char)
 
+            int lineCount = textBoxValue.Lines.Count() - 1;
+            int semicolons = lineCount;
+
+            int charCount = textBoxValue.Text.Length - lineCount * 2 + semicolons;
+
+            this.labelCharCount.Text = string.Format("{0} Chars", charCount);
         }
     }
 
