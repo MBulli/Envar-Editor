@@ -100,14 +100,21 @@ namespace EnvarEditor
 
         private void NewEnvVar()
         {
-            EnvVar newVar = new EnvVar();
-            newVar.Name = "(New Variable)";
-
             // check name duplicate
+            string newName = "(New variable)";
+            int i = 0;
+            while (this.EnvVars.FirstOrDefault(e => (e.Name == newName && !e.UserSpecific)) != null)
+            {
+                newName = string.Format("(New variable {0})", i++);
+            }
+
+            EnvVar newVar = new EnvVar();
+            newVar.Name = newName;
 
             if (EditEnvVar(newVar, EnvVarEditMode.FullEdit))
             {
                 this.EnvVars.Add(newVar);
+                newVar.SaveToRegistry();
             }
         }
 
@@ -130,7 +137,7 @@ namespace EnvarEditor
                 return;
 
             string msg = string.Format("Really delete '{0}’ permanently? This can’t be undone and could harm your system.", var.Name);
-            if (MessageBox.Show(msg, "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show(msg, "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
                 {
